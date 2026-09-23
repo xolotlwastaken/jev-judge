@@ -4,7 +4,8 @@ A Chrome Extension (Manifest V3) and high-speed Node.js/TypeScript backend that 
 
 Designed specifically for clear, engaging demos with visually obvious post highlights, animated stamps, live spend tracking, and terminal logs.
 
-> 📖 **Tutorial & Walkthrough**: Check out the [Step-by-Step Implementation Guide](GUIDE.md) to learn how each component was built from scratch.
+> 📖 **Tutorial & Walkthrough**: Check out the [Step-by-Step Implementation Guide](GUIDE.md) to learn how each component was built from scratch.  
+> 📄 **Printable PDF Guide**: Download the complete [Jev_Judge_Setup_Guide.pdf](Jev_Judge_Setup_Guide.pdf) ready to share with friends or viewers.
 
 ---
 
