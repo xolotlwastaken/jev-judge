@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Jev Judge — Complete Setup & Implementation Guide</title>
+  <title>Jev Judge — Setup Guide</title>
   <style>
     @page {
       size: A4;
-      margin: 10mm 14mm 10mm 14mm;
+      margin: 14mm 16mm 14mm 16mm;
     }
 
     * {
@@ -16,266 +16,214 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      color: #18181b;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #0f172a;
       background: #ffffff;
-      line-height: 1.4;
-      font-size: 9pt;
+      line-height: 1.5;
+      font-size: 9.2pt;
+      -webkit-font-smoothing: antialiased;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
 
     .page {
-      height: 277mm; /* Full A4 height minus margins */
-      position: relative;
+      height: 269mm;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      position: relative;
     }
 
     .page-break {
       page-break-before: always;
     }
 
-    /* Header Banner */
+    /* Minimalist Header */
     .header {
-      background: linear-gradient(135deg, #090d16 0%, #1e1b4b 100%);
-      color: #ffffff;
-      padding: 16px 20px;
-      border-radius: 10px;
-      margin-bottom: 12px;
-      border: 1px solid #334155;
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #e2e8f0;
     }
 
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .kicker {
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6366f1;
       margin-bottom: 4px;
     }
 
-    .badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: rgba(99, 102, 241, 0.28);
-      border: 1px solid rgba(129, 140, 248, 0.5);
-      color: #c7d2fe;
-      padding: 2px 9px;
-      border-radius: 9999px;
-      font-size: 7.5pt;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .repo-link {
-      color: #93c5fd;
-      font-size: 8pt;
-      text-decoration: none;
-      font-weight: 600;
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
     }
 
     h1 {
-      font-size: 18pt;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #ffffff;
-      margin-bottom: 3px;
-    }
-
-    .subtitle {
-      font-size: 8.8pt;
-      color: #cbd5e1;
-      line-height: 1.35;
-    }
-
-    /* Meta bar */
-    .meta-bar {
-      display: flex;
-      justify-content: space-between;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 6px 12px;
-      margin-bottom: 12px;
-      font-size: 8pt;
-      color: #475569;
-    }
-
-    .meta-item strong {
+      font-size: 20pt;
+      font-weight: 700;
+      letter-spacing: -0.03em;
       color: #0f172a;
     }
 
-    /* Step Cards */
-    .step-card {
-      border: 1px solid #e2e8f0;
-      border-radius: 9px;
-      padding: 11px 14px;
-      margin-bottom: 10px;
-      background: #ffffff;
+    .header-link {
+      font-size: 8.5pt;
+      color: #64748b;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
     }
 
-    .step-header {
+    .subtitle {
+      font-size: 9.5pt;
+      color: #475569;
+      max-width: 600px;
+      line-height: 1.45;
+    }
+
+    /* Section Step Block */
+    .step {
+      margin-bottom: 20px;
+    }
+
+    .step-label {
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 8px;
       margin-bottom: 6px;
     }
 
     .step-num {
-      width: 22px;
-      height: 22px;
-      background: #4f46e5;
-      color: #ffffff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 8.5pt;
-      font-weight: 800;
-      flex-shrink: 0;
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #6366f1;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
     }
 
     .step-title {
-      font-size: 10.5pt;
-      font-weight: 700;
+      font-size: 11pt;
+      font-weight: 600;
       color: #0f172a;
+      letter-spacing: -0.01em;
     }
 
-    .step-desc {
-      font-size: 8.6pt;
-      color: #334155;
-      margin-bottom: 6px;
-      line-height: 1.4;
+    .step-text {
+      color: #475569;
+      font-size: 9pt;
+      margin-bottom: 8px;
+      line-height: 1.45;
     }
 
     /* Code Blocks */
     pre {
-      background: #0f172a;
-      color: #e2e8f0;
-      padding: 8px 12px;
+      background: #090d16;
+      color: #f1f5f9;
+      padding: 9px 13px;
       border-radius: 6px;
-      font-family: ui-monospace, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace;
-      font-size: 7.8pt;
-      line-height: 1.45;
-      margin: 5px 0;
+      font-family: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+      font-size: 8.2pt;
+      line-height: 1.5;
+      margin: 6px 0;
       border: 1px solid #1e293b;
     }
 
     code {
-      font-family: ui-monospace, "SF Mono", Monaco, monospace;
-      font-size: 8pt;
+      font-family: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+      font-size: 8.2pt;
       background: #f1f5f9;
-      color: #4338ca;
-      padding: 1px 4px;
-      border-radius: 3px;
-      border: 1px solid #e2e8f0;
+      color: #4f46e5;
+      padding: 1.5px 5px;
+      border-radius: 4px;
     }
 
     pre code {
       background: transparent;
       color: inherit;
       padding: 0;
-      border: none;
     }
 
     .comment { color: #64748b; }
-    .keyword { color: #38bdf8; font-weight: 600; }
-    .string { color: #4ade80; }
+    .keyword { color: #38bdf8; }
+    .string { color: #34d399; }
 
-    /* Highlights & Badges Table */
+    /* Lists */
+    ol, ul {
+      margin-left: 18px;
+      color: #334155;
+      font-size: 9pt;
+    }
+
+    li {
+      margin-bottom: 5px;
+      line-height: 1.45;
+    }
+
+    li strong {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    /* Note block */
+    .note {
+      padding: 7px 12px;
+      background: #f8fafc;
+      border-left: 2.5px solid #94a3b8;
+      border-radius: 0 5px 5px 0;
+      font-size: 8.3pt;
+      color: #475569;
+      margin: 7px 0;
+      line-height: 1.4;
+    }
+
+    /* Table */
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 8px 0;
-      font-size: 8.2pt;
+      margin: 10px 0;
+      font-size: 8.5pt;
     }
 
     th {
-      background: #f1f5f9;
-      color: #0f172a;
       text-align: left;
-      padding: 5px 8px;
+      font-size: 7.5pt;
       font-weight: 700;
-      border-bottom: 1.5px solid #cbd5e1;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #64748b;
+      padding: 6px 8px;
+      border-bottom: 1px solid #cbd5e1;
     }
 
     td {
-      padding: 5px 8px;
-      border-bottom: 1px solid #e2e8f0;
+      padding: 7px 8px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
       vertical-align: middle;
     }
 
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 7.4pt;
+    .badge {
+      display: inline-block;
+      font-size: 7.5pt;
       font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 9999px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.03em;
     }
 
-    .tag-breaking {
-      background: rgba(34, 197, 94, 0.15);
-      color: #15803d;
-      border: 1px solid rgba(34, 197, 94, 0.4);
-    }
-
-    .tag-nugget {
-      background: rgba(234, 179, 8, 0.15);
-      color: #a16207;
-      border: 1px solid rgba(234, 179, 8, 0.4);
-    }
-
-    .tag-meh {
-      background: rgba(100, 116, 139, 0.15);
-      color: #475569;
-      border: 1px solid rgba(100, 116, 139, 0.35);
-    }
-
-    .tag-slop {
-      background: rgba(239, 68, 68, 0.15);
-      color: #b91c1c;
-      border: 1px solid rgba(239, 68, 68, 0.4);
-    }
-
-    /* Callout Boxes */
-    .callout {
-      background: #f0fdf4;
-      border-left: 3px solid #22c55e;
-      padding: 6px 10px;
-      border-radius: 0 5px 5px 0;
-      font-size: 8.2pt;
-      color: #166534;
-      margin: 6px 0;
-      line-height: 1.35;
-    }
-
-    .callout-info {
-      background: #eef2ff;
-      border-left-color: #6366f1;
-      color: #3730a3;
-    }
-
-    .callout-warn {
-      background: #fffbeb;
-      border-left-color: #f59e0b;
-      color: #92400e;
-    }
+    .badge-breaking { background: #dcfce7; color: #15803d; }
+    .badge-nugget   { background: #fef9c3; color: #854d0e; }
+    .badge-meh      { background: #f1f5f9; color: #475569; }
+    .badge-slop     { background: #fee2e2; color: #b91c1c; }
 
     /* Footer */
     .footer {
-      padding-top: 8px;
-      border-top: 1px solid #e2e8f0;
+      padding-top: 10px;
+      border-top: 1px solid #f1f5f9;
       display: flex;
       justify-content: space-between;
-      align-items: center;
       font-size: 7.5pt;
-      color: #64748b;
+      color: #94a3b8;
     }
   </style>
 </head>
@@ -284,92 +232,78 @@
   <!-- ==================== PAGE 1 ==================== -->
   <div class="page">
     <div>
-      <!-- Header -->
       <div class="header">
-        <div class="header-top">
-          <span class="badge-pill">◆ Setup & Run Guide</span>
-          <span class="repo-link">github.com/xolotlwastaken/jev-judge</span>
+        <div class="kicker">Quickstart Guide</div>
+        <div class="title-row">
+          <h1>Jev Judge Setup</h1>
+          <div class="header-link">github.com/xolotlwastaken/jev-judge</div>
         </div>
-        <h1>⚡ Jev Judge Setup Guide</h1>
         <div class="subtitle">
-          Complete guide to clone the repo, configure the Jev API key via OpenRouter, load the Chrome extension, and classify X (Twitter) posts in real time.
+          How to clone the repository, connect the Jev model via OpenRouter, load the Chrome extension, and run real-time post classification on X.
         </div>
       </div>
 
-      <!-- Quick Info Bar -->
-      <div class="meta-bar">
-        <div class="meta-item">⏱️ <strong>Setup Time:</strong> ~3 Minutes</div>
-        <div class="meta-item">💻 <strong>Prerequisites:</strong> Node.js (v18+) & Google Chrome</div>
-        <div class="meta-item">💰 <strong>Cost:</strong> Free demo mode or ~$0.042 / 1M tokens on Jev</div>
-      </div>
-
-      <!-- STEP 1 -->
-      <div class="step-card">
-        <div class="step-header">
-          <div class="step-num">1</div>
-          <div class="step-title">Clone the GitHub Repository</div>
+      <!-- Step 01 -->
+      <div class="step">
+        <div class="step-label">
+          <span class="step-num">01</span>
+          <span class="step-title">Clone the repository</span>
         </div>
-        <div class="step-desc">
-          Open your terminal and clone the official project repository to your local machine:
+        <div class="step-text">
+          Clone the project and install the backend dependencies:
         </div>
         <pre><code><span class="keyword">git</span> clone https://github.com/xolotlwastaken/jev-judge.git
-<span class="keyword">cd</span> jev-judge</code></pre>
+<span class="keyword">cd</span> jev-judge/server
+<span class="keyword">npm</span> install</code></pre>
       </div>
 
-      <!-- STEP 2 -->
-      <div class="step-card">
-        <div class="step-header">
-          <div class="step-num">2</div>
-          <div class="step-title">Get Your Jev API Key from OpenRouter</div>
+      <!-- Step 02 -->
+      <div class="step">
+        <div class="step-label">
+          <span class="step-num">02</span>
+          <span class="step-title">Get an OpenRouter API key</span>
         </div>
-        <div class="step-desc">
-          TypeSafe AI's Jev model is hosted on OpenRouter as <code>~typesafe/jev-latest</code> via their Decisions API. This gives you instant access with <strong>zero waitlist</strong>:
+        <div class="step-text">
+          TypeSafe AI's Jev model is hosted on OpenRouter as <code>~typesafe/jev-latest</code>. You can access it directly with no waitlist:
         </div>
-        <ol style="margin-left: 18px; font-size: 8.5pt; color: #334155; line-height: 1.45;">
-          <li>Navigate to <strong style="color: #4338ca;">https://openrouter.ai</strong> and log in or create a free account.</li>
-          <li>Go to <strong>Keys</strong> (<span style="color: #4338ca;">https://openrouter.ai/keys</span>) and click <strong>Create Key</strong>.</li>
-          <li>Name your key <code>jev-judge</code> and copy the generated key (format: <code>sk-or-v1-...</code>).</li>
-          <li><em>(Optional)</em> Add a small credit ($1 to $5) in OpenRouter Settings. At <strong>$0.042 per 1M input tokens</strong>, $1.00 classifies more than <strong>20,000 tweets</strong>!</li>
+        <ol>
+          <li>Sign in at <strong>openrouter.ai</strong> and go to <strong>openrouter.ai/keys</strong>.</li>
+          <li>Click <strong>Create Key</strong>, name it <code>jev-judge</code>, and copy the key (<code>sk-or-v1-...</code>).</li>
+          <li><em>(Optional)</em> Add $1 credit. At $0.042 / 1M input tokens, $1 covers over 20,000 tweets.</li>
         </ol>
-        <div class="callout callout-info">
-          💡 <strong>Offline Demo Mode:</strong> Don't have an OpenRouter key yet? No problem! If no key is set, the backend automatically runs in smart Local Demo Mode with simulated classifications so you can test immediately.
+        <div class="note">
+          <strong>Note:</strong> If you leave the key blank, the backend automatically runs in offline demo mode with simulated classifications for testing.
         </div>
       </div>
 
-      <!-- STEP 3 -->
-      <div class="step-card">
-        <div class="step-header">
-          <div class="step-num">3</div>
-          <div class="step-title">Configure & Start the Backend Server</div>
+      <!-- Step 03 -->
+      <div class="step">
+        <div class="step-label">
+          <span class="step-num">03</span>
+          <span class="step-title">Configure `.env` and start the server</span>
         </div>
-        <div class="step-desc">
-          The local backend securely handles Jev API calls, tracks token spend, and deduplicates posts with an in-memory cache:
+        <div class="step-text">
+          Copy the example environment template inside the <code>server/</code> directory:
         </div>
-        <pre><code><span class="comment"># 1. Navigate into the server directory and install dependencies</span>
-<span class="keyword">cd</span> server
-<span class="keyword">npm</span> install
-
-<span class="comment"># 2. Copy the example configuration to create your .env file</span>
-<span class="keyword">cp</span> .env.example .env</code></pre>
-        <div class="step-desc" style="margin-top: 5px;">
-          Open <code>server/.env</code> in your code editor and paste your OpenRouter key:
+        <pre><code><span class="keyword">cp</span> .env.example .env</code></pre>
+        <div class="step-text" style="margin-top: 6px;">
+          Open <code>server/.env</code> and set your key:
         </div>
-        <pre><code>OPENROUTER_API_KEY=<span class="string">sk-or-v1-your_actual_openrouter_key</span>
+        <pre><code>OPENROUTER_API_KEY=<span class="string">sk-or-v1-your_actual_key_here</span>
 PORT=<span class="keyword">8787</span>
 DEBUG=<span class="keyword">false</span></code></pre>
-        <div class="step-desc" style="margin-top: 5px;">
-          Start the backend in development mode:
+        <div class="step-text" style="margin-top: 6px;">
+          Start the backend:
         </div>
         <pre><code><span class="keyword">npm</span> run dev</code></pre>
-        <div class="callout">
-          ✅ <strong>Success output:</strong> <code>Jev Judge Backend running on http://localhost:8787 · Active Provider: OpenRouter (Jev)</code>
+        <div class="step-text" style="margin-top: 4px; font-size: 8.3pt; color: #16a34a;">
+          ✓ Terminal will display: <code>Jev Judge Backend running on http://localhost:8787 · Active Provider: OpenRouter (Jev)</code>
         </div>
       </div>
     </div>
 
-    <!-- Page 1 Footer -->
     <div class="footer">
-      <div>Jev Judge · Step-by-Step Implementation Guide</div>
+      <div>Jev Judge · Implementation Guide</div>
       <div>Page 1 of 2</div>
     </div>
   </div>
@@ -377,105 +311,98 @@ DEBUG=<span class="keyword">false</span></code></pre>
   <!-- ==================== PAGE 2 ==================== -->
   <div class="page page-break">
     <div>
-      <!-- STEP 4 -->
-      <div class="step-card">
-        <div class="step-header">
-          <div class="step-num">4</div>
-          <div class="step-title">Load the Chrome Extension</div>
+      <div class="header" style="margin-bottom: 18px; padding-bottom: 10px;">
+        <div class="kicker">Browser Setup & Testing</div>
+        <div class="title-row">
+          <h1>Extension & Live Feed</h1>
+          <div class="header-link">chrome://extensions</div>
         </div>
-        <div class="step-desc">
-          Install the unpacked extension directly into Google Chrome in just a few clicks:
+      </div>
+
+      <!-- Step 04 -->
+      <div class="step">
+        <div class="step-label">
+          <span class="step-num">04</span>
+          <span class="step-title">Load the Chrome extension</span>
         </div>
-        <ol style="margin-left: 18px; font-size: 8.5pt; color: #334155; line-height: 1.5;">
-          <li>Open Google Chrome and visit: <code>chrome://extensions</code></li>
-          <li>In the top-right corner, toggle <strong>Developer mode</strong> to <strong>ON</strong>.</li>
-          <li>Click the <strong>Load unpacked</strong> button in the top-left toolbar.</li>
-          <li>Navigate into your cloned <code>jev-judge</code> directory and select the <strong><code>extension</code></strong> folder.</li>
-          <li><strong>Jev Judge</strong> will immediately appear in your extensions list with its purple diamond icon.</li>
+        <div class="step-text">
+          Load the unpacked extension folder into Chrome:
+        </div>
+        <ol>
+          <li>Open Google Chrome and navigate to <code>chrome://extensions</code>.</li>
+          <li>Turn on <strong>Developer mode</strong> using the toggle in the top-right corner.</li>
+          <li>Click <strong>Load unpacked</strong> in the top-left toolbar.</li>
+          <li>Select the <code>extension/</code> folder inside the cloned <code>jev-judge</code> directory.</li>
         </ol>
       </div>
 
-      <!-- STEP 5 -->
-      <div class="step-card">
-        <div class="step-header">
-          <div class="step-num">5</div>
-          <div class="step-title">Test Live on X (Twitter)</div>
+      <!-- Step 05 -->
+      <div class="step">
+        <div class="step-label">
+          <span class="step-num">05</span>
+          <span class="step-title">Open X and test in real time</span>
         </div>
-        <div class="step-desc">
-          Now experience real-time AI classification as you scroll:
+        <div class="step-text">
+          Go to <strong>x.com</strong> in Chrome (or refresh any tab). As you scroll through your feed:
         </div>
-        <ol style="margin-left: 18px; font-size: 8.5pt; color: #334155; line-height: 1.45;">
-          <li>Open <strong>https://x.com</strong> in Chrome (or refresh any existing X tab).</li>
-          <li>Look in the bottom-right corner: you'll see the floating <strong>JEV HUD Pill</strong>:
-            <code style="color: #10b981; font-weight: 700;">◆ JEV · 0 judged · $0.00000</code>
-          </li>
-          <li>Start scrolling! Posts entering your view will briefly display <code>◆ JEV JUDGING...</code> and resolve in ~200ms.</li>
-        </ol>
+        <ul>
+          <li>A floating <strong>JEV HUD pill</strong> appears in the bottom-right corner tracking judged posts and spend in real time.</li>
+          <li>Posts in your viewport flash <code>◆ JEV JUDGING...</code> and resolve into one of 4 categories within ~200ms:</li>
+        </ul>
 
-        <!-- Table of 4 Categories -->
-        <table style="margin-top: 8px;">
+        <table>
           <thead>
             <tr>
-              <th style="width: 24%;">Category</th>
-              <th style="width: 36%;">Visual Effect on X</th>
-              <th style="width: 40%;">Classification Criteria</th>
+              <th style="width: 22%;">Category</th>
+              <th style="width: 38%;">Visual Treatment</th>
+              <th style="width: 40%;">What It Classifies</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><span class="tag tag-breaking">● BREAKING</span></td>
+              <td><span class="badge badge-breaking">BREAKING</span></td>
               <td>Neon green strobe badge + green border glow</td>
-              <td>Major AI model launches, research papers, releases</td>
+              <td>Major model launches, releases, announcements</td>
             </tr>
             <tr>
-              <td><span class="tag tag-nugget">● GOLDEN NUGGET</span></td>
-              <td>Golden shimmering badge + gold accent border</td>
-              <td>In-depth tutorials, code snippets, benchmarks, prompts</td>
+              <td><span class="badge badge-nugget">GOLDEN NUGGET</span></td>
+              <td>Golden shimmering badge + yellow accent border</td>
+              <td>Practical tutorials, code, workflows, benchmarks</td>
             </tr>
             <tr>
-              <td><span class="tag tag-meh">● MEH</span></td>
-              <td>Subtle grey badge + grey left accent line</td>
-              <td>Casual banter, everyday thoughts, routine chatter</td>
+              <td><span class="badge badge-meh">MEH</span></td>
+              <td>Subtle grey badge + grey left border</td>
+              <td>Routine thoughts, casual banter, everyday chatter</td>
             </tr>
             <tr>
-              <td><span class="tag tag-slop">● AI SLOP</span></td>
-              <td><strong>Permanent animated meme stamp</strong> + red siren border</td>
-              <td>Hype threads, recycled platitudes, impression farming</td>
+              <td><span class="badge badge-slop">AI SLOP</span></td>
+              <td>Permanent animated meme stamp + red siren border</td>
+              <td>Recycled threads, hype bait, engagement farming</td>
             </tr>
           </tbody>
         </table>
 
-        <div class="step-desc" style="margin-top: 8px;">
-          <strong>Extension Popup Dashboard:</strong> Click the Jev Judge icon in Chrome's toolbar to view your cumulative session stats, per-category breakdown, and exact dollar spend. Click <strong>Reset session</strong> to wipe all DOM stamps and start fresh.
+        <div class="step-text" style="margin-top: 6px;">
+          Click the extension icon in the toolbar to see cumulative counts, total dollar spend, or click <strong>Reset session</strong> to wipe cached stamps and start fresh.
         </div>
       </div>
 
-      <!-- STEP 6: TROUBLESHOOTING & PRO TIPS -->
-      <div class="step-card">
-        <div class="step-header">
-          <div class="step-num">★</div>
-          <div class="step-title">Troubleshooting & Pro Tips</div>
+      <!-- Pro Tips -->
+      <div class="step" style="margin-bottom: 0;">
+        <div class="step-label">
+          <span class="step-num">06</span>
+          <span class="step-title">Quick tips & troubleshooting</span>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 7px; font-size: 8.3pt; color: #334155; line-height: 1.4;">
-          <div>
-            <strong>• Badges say "JEV UNAVAILABLE"?</strong><br>
-            Ensure your backend terminal is running on port 8787. You can check health by running <code>curl http://localhost:8787/health</code> in your terminal.
-          </div>
-          <div>
-            <strong>• Modified extension styles or scripts?</strong><br>
-            Whenever you make changes to files in <code>extension/</code>, go to <code>chrome://extensions</code>, click the <strong>reload icon (↻)</strong> on Jev Judge, and hard-refresh X (<code>Cmd + Shift + R</code>).
-          </div>
-          <div>
-            <strong>• Split-Screen YouTube Layout:</strong><br>
-            Position your browser with X on the left and your terminal running <code>npm run dev</code> on the right. Your audience can watch classifications and micro-penny costs resolve simultaneously as you scroll!
-          </div>
-        </div>
+        <ul>
+          <li><strong>Badges say UNAVAILABLE?</strong> The backend must be running on port 8787. Verify with <code>curl http://localhost:8787/health</code>.</li>
+          <li><strong>Made changes to code or styles?</strong> Go to <code>chrome://extensions</code>, click reload (↻) on Jev Judge, and refresh X (<code>Cmd + Shift + R</code>).</li>
+          <li><strong>Recording a demo?</strong> Position X on the left side of your screen and the terminal on the right. Your audience can watch classifications and costs log simultaneously.</li>
+        </ul>
       </div>
     </div>
 
-    <!-- Page 2 Footer -->
     <div class="footer">
-      <div>Repository: <strong>https://github.com/xolotlwastaken/jev-judge</strong></div>
+      <div>Repository: github.com/xolotlwastaken/jev-judge</div>
       <div>Page 2 of 2</div>
     </div>
   </div>
