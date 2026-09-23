@@ -1,0 +1,340 @@
+/* Jev Judge — Styles for X/Twitter Feed Integration */
+
+/* 1. Global Reset & Container */
+.jev-badge-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 8px 0 6px 0;
+  padding: 0;
+  width: fit-content;
+  user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1;
+  z-index: 5;
+  position: relative;
+}
+
+/* 2. Base Pill Badge */
+.jev-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 9px;
+  border-radius: 9999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1.5px solid transparent;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+  animation: jev-badge-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes jev-badge-pop {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+    filter: brightness(1.8);
+  }
+  60% {
+    transform: scale(1.06);
+    filter: brightness(1.3);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+.jev-diamond {
+  font-size: 10px;
+  line-height: 1;
+  display: inline-block;
+}
+
+.jev-label {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.jev-confidence {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-left: 3px;
+  padding-left: 5px;
+  border-left: 1px solid currentColor;
+}
+
+/* 3. States & Flashing Light Animations */
+
+/* Judging State (Shimmer & Pulse) */
+.jev-badge.jev-judging {
+  background-color: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.45);
+  color: #818cf8;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+}
+
+.jev-badge.jev-judging .jev-diamond {
+  animation: jev-spin-pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes jev-spin-pulse {
+  0% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+  50% { transform: scale(1.35) rotate(90deg); opacity: 1; }
+  100% { transform: scale(1) rotate(180deg); opacity: 0.6; }
+}
+
+/* Breaking: High-Visibility Flashing GREEN Light */
+.jev-badge.jev-breaking {
+  background-color: rgba(34, 197, 94, 0.22);
+  border-color: #22c55e;
+  color: #86efac;
+  animation: jev-badge-pop 0.4s ease-out, jev-flash-green-badge 1s infinite alternate ease-in-out;
+}
+
+@keyframes jev-flash-green-badge {
+  0% {
+    box-shadow: 0 0 5px rgba(34, 197, 94, 0.5), inset 0 0 4px rgba(34, 197, 94, 0.2);
+    border-color: rgba(34, 197, 94, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 18px rgba(34, 197, 94, 1), 0 0 30px rgba(34, 197, 94, 0.6), inset 0 0 8px rgba(34, 197, 94, 0.4);
+    border-color: #4ade80;
+  }
+}
+
+/* Golden Nugget: Glowing Golden Light */
+.jev-badge.jev-golden_nugget {
+  background-color: rgba(234, 179, 8, 0.22);
+  border-color: #eab308;
+  color: #fef08a;
+  animation: jev-badge-pop 0.4s ease-out, jev-flash-gold-badge 1.2s infinite alternate ease-in-out;
+}
+
+@keyframes jev-flash-gold-badge {
+  0% {
+    box-shadow: 0 0 5px rgba(234, 179, 8, 0.5), inset 0 0 4px rgba(234, 179, 8, 0.2);
+    border-color: rgba(234, 179, 8, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 16px rgba(234, 179, 8, 1), 0 0 28px rgba(234, 179, 8, 0.5), inset 0 0 8px rgba(234, 179, 8, 0.4);
+    border-color: #fde047;
+  }
+}
+
+/* Meh: Clean Grey Badge */
+.jev-badge.jev-meh {
+  background-color: rgba(148, 163, 184, 0.16);
+  border-color: #64748b;
+  color: #cbd5e1;
+  animation: jev-badge-pop 0.4s ease-out;
+}
+
+/* AI Slop: Emergency Alert Red Flashing Badge */
+.jev-badge.jev-ai_slop {
+  background-color: rgba(239, 68, 68, 0.28);
+  border-color: #ef4444;
+  color: #ffffff;
+  animation: jev-badge-pop 0.4s ease-out, jev-flash-slop-badge 0.7s infinite alternate ease-in-out;
+}
+
+@keyframes jev-flash-slop-badge {
+  0% {
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
+    background-color: rgba(239, 68, 68, 0.25);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 1), 0 0 30px rgba(239, 68, 68, 0.7);
+    background-color: rgba(239, 68, 68, 0.45);
+  }
+}
+
+/* Unavailable State */
+.jev-badge.jev-unavailable {
+  background-color: rgba(100, 116, 139, 0.12);
+  border-color: rgba(100, 116, 139, 0.30);
+  color: #94a3b8;
+  font-size: 10px;
+}
+
+/* 4. Post Borders & Strobe Effects */
+article[data-testid="tweet"] {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative !important;
+}
+
+/* Breaking Post Treatment (Green Highlight) */
+article.jev-post-breaking {
+  border-left: 4px solid #22c55e !important;
+  box-shadow: -4px 0 22px rgba(34, 197, 94, 0.55) !important;
+  background-color: rgba(34, 197, 94, 0.025) !important;
+}
+
+/* Golden Nugget Post Treatment */
+article.jev-post-golden-nugget {
+  border-left: 4px solid #eab308 !important;
+  box-shadow: -4px 0 18px rgba(234, 179, 8, 0.4) !important;
+  background-color: rgba(234, 179, 8, 0.02) !important;
+}
+
+/* Meh Post Treatment (Grey Highlight) */
+article.jev-post-meh {
+  border-left: 4px solid #64748b !important;
+  box-shadow: -4px 0 14px rgba(100, 116, 139, 0.3) !important;
+  background-color: rgba(100, 116, 139, 0.02) !important;
+}
+
+/* AI Slop Post: Red Flashing Border Siren Highlight */
+article.jev-post-ai-slop {
+  border: 2.5px solid #ef4444 !important;
+  border-radius: 16px !important;
+  animation: jev-slop-siren 0.75s infinite alternate ease-in-out !important;
+}
+
+@keyframes jev-slop-siren {
+  0% {
+    border-color: rgba(239, 68, 68, 0.5) !important;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.4), inset 0 0 10px rgba(239, 68, 68, 0.15) !important;
+  }
+  100% {
+    border-color: #ff2222 !important;
+    box-shadow: 0 0 28px rgba(239, 68, 68, 0.95), 0 0 45px rgba(239, 68, 68, 0.55), inset 0 0 22px rgba(239, 68, 68, 0.35) !important;
+  }
+}
+
+/* 5. AI Slop Meme Animated Stamp Overlay (Stamps on top of post and stays) */
+.jev-slop-stamp-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  z-index: 9999;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: jev-stamp-slam-stay 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.jev-slop-stamp-img {
+  max-width: 440px;
+  width: 85%;
+  max-height: 330px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 16px 36px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 24px rgba(239, 68, 68, 0.95));
+}
+
+@keyframes jev-stamp-slam-stay {
+  /* 1. Starts huge in the air */
+  0% {
+    transform: translate(-50%, -50%) scale(3.5) rotate(-28deg);
+    opacity: 0;
+    filter: blur(10px);
+  }
+  /* 2. Slams down with heavy stamp impact! */
+  55% {
+    transform: translate(-50%, -50%) scale(0.92) rotate(-8deg);
+    opacity: 1;
+    filter: blur(0);
+  }
+  /* 3. Small bounce */
+  75% {
+    transform: translate(-50%, -50%) scale(1.05) rotate(-7deg);
+    opacity: 1;
+  }
+  /* 4. Settled stamp, stays permanently on top of the post! */
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(-8deg);
+    opacity: 0.96;
+  }
+}
+
+/* 6. Disabled State */
+body.jev-disabled .jev-badge-container,
+body.jev-disabled .jev-slop-stamp-overlay {
+  display: none !important;
+}
+
+body.jev-disabled article.jev-post-breaking,
+body.jev-disabled article.jev-post-golden-nugget,
+body.jev-disabled article.jev-post-meh {
+  border-left: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+body.jev-disabled article.jev-post-ai-slop {
+  border: none !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+body.jev-disabled .jev-feed-hud {
+  display: none !important;
+}
+
+/* 7. Floating Feed HUD Widget */
+.jev-feed-hud {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(99, 102, 241, 0.25);
+  user-select: none;
+  pointer-events: auto;
+  transition: all 0.25s ease;
+}
+
+.jev-feed-hud:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), 0 0 22px rgba(99, 102, 241, 0.4);
+  border-color: rgba(129, 140, 248, 0.6);
+}
+
+.jev-hud-diamond {
+  color: #818cf8;
+  font-size: 10px;
+}
+
+.jev-hud-title {
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+
+.jev-hud-sep {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.jev-hud-posts {
+  color: #cbd5e1;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+
+.jev-hud-cost {
+  color: #4ade80;
+  font-weight: 700;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}

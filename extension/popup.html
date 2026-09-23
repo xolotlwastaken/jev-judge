@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jev Judge</title>
+  <style>
+    :root {
+      --bg: #09090b;
+      --card-bg: #18181b;
+      --border: #27272a;
+      --text: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --accent: #818cf8;
+      --red: #f87171;
+      --gold: #facc15;
+      --gray: #94a3b8;
+      --green: #4ade80;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 290px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      user-select: none;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .title-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .diamond-icon {
+      color: var(--accent);
+      font-size: 13px;
+    }
+
+    h1 {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(74, 222, 128, 0.12);
+      color: var(--green);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+    }
+
+    .status-badge.inactive {
+      background: rgba(148, 163, 184, 0.1);
+      color: var(--text-muted);
+      border-color: rgba(148, 163, 184, 0.2);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* Toggle row */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 14px;
+    }
+
+    .toggle-label {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 38px;
+      height: 22px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #3f3f46;
+      transition: .25s ease;
+      border-radius: 22px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .25s ease;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--accent);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(16px);
+    }
+
+    /* Stats container */
+    .stats-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+
+    .stats-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+
+    .stats-total-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stats-total-col.right {
+      align-items: flex-end;
+    }
+
+    .stats-total-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .stats-total-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .spend-val {
+      color: #818cf8;
+      font-feature-settings: "tnum";
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stats-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+
+    .stat-name {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .dot.green { background: var(--green); }
+    .dot.gold { background: var(--gold); }
+    .dot.gray { background: var(--gray); }
+    .dot.red { background: var(--red); }
+
+    .stat-count {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Reset button */
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    button.btn-reset {
+      width: 100%;
+      padding: 8px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    button.btn-reset:hover {
+      background: #27272a;
+      color: var(--text);
+      border-color: #3f3f46;
+    }
+
+    button.btn-reset:active {
+      transform: scale(0.98);
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 10.5px;
+      color: #71717a;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title-group">
+      <div class="title-row">
+        <span class="diamond-icon">◆</span>
+        <h1>Jev Judge</h1>
+      </div>
+      <div class="subtitle">AI-powered X feed filtering</div>
+    </div>
+    <div id="statusBadge" class="status-badge">
+      <div class="status-dot"></div>
+      <span id="statusText">Active</span>
+    </div>
+  </div>
+
+  <div class="toggle-row">
+    <span class="toggle-label">Enable Jev Judge</span>
+    <label class="switch">
+      <input type="checkbox" id="enableToggle" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="stats-container">
+    <div class="stats-total">
+      <div class="stats-total-col">
+        <span class="stats-total-label">Posts judged</span>
+        <span id="totalCount" class="stats-total-val">0</span>
+      </div>
+      <div class="stats-total-col right">
+        <span class="stats-total-label">Total spent</span>
+        <span id="totalSpend" class="stats-total-val spend-val">$0.00000</span>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-name">
+          <div class="dot green"></div>
+          <span>Breaking</span>
+        </div>
+        <span id="breakingCount" class="stat-count">0</span>
+      </div>
+      <div class="stat-item">
+        <div class="stat-name">
+          <div class="dot gold"></div>
+          <span>Golden Nuggets</span>
+        </div>
+        <span id="goldenCount" class="stat-count">0</span>
+      </div>
+      <div class="stat-item">
+        <div class="stat-name">
+          <div class="dot gray"></div>
+          <span>Meh</span>
+        </div>
+        <span id="mehCount" class="stat-count">0</span>
+      </div>
+      <div class="stat-item">
+        <div class="stat-name">
+          <div class="dot red"></div>
+          <span>AI Slop</span>
+        </div>
+        <span id="slopCount" class="stat-count">0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button id="btnReset" class="btn-reset">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+        <path d="M3 3v5h5"/>
+      </svg>
+      Reset session
+    </button>
+  </div>
+
+  <div class="footer">
+    Powered by TypeSafe AI · Jev System One
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
